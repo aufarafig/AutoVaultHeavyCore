@@ -6,13 +6,15 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import me.ggthfn.heavycore.network.HeavyCoreClientPacketHandler;
 
 public class TukangkunciClient implements ClientModInitializer {
     private static int interactCooldown = 0;
-    private static BlockPos lastTriggeredPos = null;
 
     @Override
     public void onInitializeClient() {
+        HeavyCoreClientPacketHandler.register();
+
         HudRenderCallback.EVENT.register((context, tickDelta) -> {
             HudRenderer.render(context);
         });
@@ -24,14 +26,12 @@ public class TukangkunciClient implements ClientModInitializer {
 
             if (HudRenderer.shouldTrigger != null && interactCooldown == 0) {
                 BlockPos pos = HudRenderer.shouldTrigger;
-                HudRenderer.shouldTrigger = null; // reset flag
+                HudRenderer.shouldTrigger = null;
 
                 if (client.interactionManager != null && client.player != null && client.crosshairTarget instanceof BlockHitResult bhr) {
-                    // validasi posisi sama dengan yang dideteksi HUD
-                    if (bhr.getBlockPos().equals(pos) && (lastTriggeredPos == null || !lastTriggeredPos.equals(pos))) {
+                    if (bhr.getBlockPos().equals(pos)) {
                         client.interactionManager.interactBlock(client.player, Hand.MAIN_HAND, bhr);
-                        interactCooldown = 10; // cooldown 10 tick
-                        lastTriggeredPos = pos; // simpan vault terakhir
+                        interactCooldown = 10;
                     }
                 }
             }

@@ -1,6 +1,10 @@
 package me.ggthfn.heavycore.mixin;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.VaultBlockEntity;
+import net.minecraft.block.vault.VaultConfig;
+import net.minecraft.block.vault.VaultServerData;
+import net.minecraft.block.vault.VaultSharedData;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -13,17 +17,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import me.ggthfn.heavycore.network.HeavyCorePacket;
 import me.ggthfn.heavycore.network.HeavyCorePacketHandler;
 
-@Mixin(VaultBlockEntity.class)
+@Mixin(VaultBlockEntity.Server.class)
 public class VaultBlockEntityMixin {
-    @Inject(method = "setDisplayItem", at = @At("TAIL"))
-    private void onSetDisplayItem(ItemStack stack, CallbackInfo ci) {
-        if (!stack.isEmpty() && stack.getItem() == Items.HEAVY_CORE) {
-            VaultBlockEntity self = (VaultBlockEntity)(Object)this;
-            BlockPos pos = self.getPos();
-            if (self.getWorld() instanceof ServerWorld serverWorld) {
-                for (ServerPlayerEntity player : serverWorld.getPlayers()) {
-                    HeavyCorePacketHandler.sendToClient(player, new HeavyCorePacket(pos));
-                }
+    @Inject(method = "updateDisplayItem", at = @At("TAIL"))
+    private static void onUpdateDisplayItem(ServerWorld world, BlockPos pos, BlockState state, VaultConfig config,
+                                            VaultServerData serverData, VaultSharedData sharedData, CallbackInfo ci) {
+        ItemStack display = sharedData.getDisplayItem();
+        if (!display.isEmpty() && display.getItem() == Items.HEAVY_CORE) {
+            for (ServerPlayerEntity player : world.getPlayers()) {
+                HeavyCorePacketHandler.sendToClient(player, new HeavyCorePacket(pos));
             }
         }
     }

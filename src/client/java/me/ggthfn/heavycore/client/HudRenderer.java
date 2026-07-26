@@ -11,7 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 
 public class HudRenderer {
-    // posisi vault yang harus di-trigger (diset dari HUD)
+    // posisi vault dengan heavy_core yang akan di-trigger
     public static BlockPos shouldTrigger = null;
 
     public static void render(DrawContext context) {
@@ -20,7 +20,8 @@ public class HudRenderer {
 
         HitResult target = client.crosshairTarget;
         if (target instanceof BlockHitResult bhr) {
-            BlockEntity be = client.world.getBlockEntity(bhr.getBlockPos());
+            BlockPos lookedPos = bhr.getBlockPos();
+            BlockEntity be = client.world.getBlockEntity(lookedPos);
             if (be instanceof VaultBlockEntity vault) {
                 ItemStack display = vault.getSharedData().getDisplayItem();
                 if (!display.isEmpty()) {
@@ -29,8 +30,8 @@ public class HudRenderer {
                     int color = 0xFFFFFF;
                     if (display.getItem() == Items.HEAVY_CORE && display.getCount() > 0) {
                         color = 0xFF0000;
-                        // simpan posisi vault untuk trigger di tick
-                        shouldTrigger = bhr.getBlockPos();
+                        // trigger langsung: vault display heavy_core → pakai kunci di tangan
+                        shouldTrigger = lookedPos;
                     } else if (display.getItem() == Items.ENCHANTED_BOOK) {
                         color = 0xAA00FF;
                     }
