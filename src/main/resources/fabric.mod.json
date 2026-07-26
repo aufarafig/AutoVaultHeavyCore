@@ -1,31 +1,33 @@
 {
-	"schemaVersion": 1,
-	"id": "tukangkunci",
-	"version": "${version}",
-	"name": "Inti Berat Bypasser",
-	"description": "lu bisa auto vault biar dapet mace lebih gampang",
-	"authors": [
-		"Auwfa & Kasa"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "Gaperlu",
-	"icon": "assets/tukangkunci/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"me.ggthfn.heavycore.TukangKunci"
-		],
-		"client": [
-			"me.ggthfn.heavycore.client.TukangkunciClient"
-		]
-	},
-	"depends": {
-		"fabricloader": ">=0.19.3",
-		"minecraft": "~1.21.1",
-		"java": ">=21",
-		"fabric-api": "*"
-	}
+  "schemaVersion": 1,
+  "id": "tukangkunci",
+  "version": "${version}",
+  "name": "Tukang Kunci (HeavyCore)",
+  "description": "Automatically opens vaults in trial chambers and filters dropped items (trident, mace, heavy core, enchanted books). Based on AutoVault by Fix85.",
+  "authors": [
+    "the-meh",
+    "Fix85"
+  ],
+  "contact": {
+    "homepage": "https://github.com/bianvigano/AutoVaultHeavyCore"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "me.ggthfn.heavycore.TukangKunci"
+    ],
+    "client": [
+      "me.ggthfn.heavycore.client.TukangkunciClient"
+    ]
+  },
+  "mixins": [
+    "tukangkunci.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
 }

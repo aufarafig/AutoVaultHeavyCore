@@ -8,20 +8,16 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.VaultBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.BlockPos;
 
 public class HudRenderer {
-    // posisi vault dengan heavy_core yang akan di-trigger
-    public static BlockPos shouldTrigger = null;
-
     public static void render(DrawContext context) {
+        if (!HeavyCoreConfig.get().enabled) return;
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.world == null || client.player == null) return;
 
         HitResult target = client.crosshairTarget;
         if (target instanceof BlockHitResult bhr) {
-            BlockPos lookedPos = bhr.getBlockPos();
-            BlockEntity be = client.world.getBlockEntity(lookedPos);
+            BlockEntity be = client.world.getBlockEntity(bhr.getBlockPos());
             if (be instanceof VaultBlockEntity vault) {
                 ItemStack display = vault.getSharedData().getDisplayItem();
                 if (!display.isEmpty()) {
@@ -30,8 +26,6 @@ public class HudRenderer {
                     int color = 0xFFFFFF;
                     if (display.getItem() == Items.HEAVY_CORE && display.getCount() > 0) {
                         color = 0xFF0000;
-                        // trigger langsung: vault display heavy_core → pakai kunci di tangan
-                        shouldTrigger = lookedPos;
                     } else if (display.getItem() == Items.ENCHANTED_BOOK) {
                         color = 0xAA00FF;
                     }
@@ -42,7 +36,6 @@ public class HudRenderer {
                     int textWidth = client.textRenderer.getWidth(text);
                     int x = (screenWidth - textWidth) / 2;
                     int y = (screenHeight / 2) + 20;
-
                     context.drawText(client.textRenderer, text, x, y, color, true);
                 }
             }

@@ -1,11 +1,11 @@
 {
-	"required": true,
-	"package": "me.ggthfn.heavycore.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"VaultBlockEntityMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": false,
+  "package": "me.ggthfn.heavycore.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "VaultBlockEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
