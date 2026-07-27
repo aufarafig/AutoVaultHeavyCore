@@ -13,7 +13,6 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
-
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -56,7 +55,7 @@ public final class VaultAutoOpener {
 
         ItemStack stack = player.getStackInHand(keyHand);
         if (keyMatchesVault(stack, ominous)) {
-            if (!HeavyCoreConfig.get().useFilter || displayItemPassesFilter(world, pos)) {
+            if (displayItemPassesFilter(world, pos)) {
                 if (client.interactionManager != null) {
                     ActionResult actionResult = client.interactionManager.interactBlock(player, keyHand, blockHit);
                     if (actionResult.isAccepted()) {

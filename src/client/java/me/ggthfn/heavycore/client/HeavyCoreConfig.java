@@ -12,7 +12,6 @@ import java.util.Set;
 
 public class HeavyCoreConfig {
     public boolean enabled = true;
-    public boolean useFilter = true;
     public Set<String> filter = new LinkedHashSet<>();
     public boolean requireWindBurstOnBook = true;
     public boolean openOminous = true;

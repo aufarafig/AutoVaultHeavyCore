@@ -55,7 +55,7 @@ public class TukangkunciClient implements ClientModInitializer {
             }
             while (openGuiKey.wasPressed()) {
                 if (client.currentScreen == null) {
-                    client.setScreen(new HeavyCoreConfigScreen(null));
+                    client.setScreen(ClothConfigFactory.create(null));
                 }
             }
         });

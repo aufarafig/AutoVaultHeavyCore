@@ -19,6 +19,9 @@
     ],
     "client": [
       "me.ggthfn.heavycore.client.TukangkunciClient"
+    ],
+    "modmenu": [
+      "me.ggthfn.heavycore.client.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -28,6 +31,10 @@
     "fabricloader": ">=0.16.0",
     "minecraft": "~1.21.1",
     "java": ">=21",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "cloth-config": ">=15.0.0"
+  },
+  "recommends": {
+    "modmenu": ">=11.0.0"
   }
 }
