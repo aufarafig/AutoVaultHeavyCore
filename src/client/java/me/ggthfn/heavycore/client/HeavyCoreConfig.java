@@ -13,7 +13,7 @@ import java.util.Set;
 public class HeavyCoreConfig {
     public boolean enabled = true;
     public Set<String> filter = new LinkedHashSet<>();
-    public boolean requireWindBurstOnBook = true;
+    public boolean requireWindBurstOnBook = false;
     public boolean openOminous = true;
     public boolean openNormal = true;
 
@@ -60,8 +60,6 @@ public class HeavyCoreConfig {
 
     private static HeavyCoreConfig defaults() {
         HeavyCoreConfig c = new HeavyCoreConfig();
-        c.filter.add("minecraft:trident");
-        c.filter.add("minecraft:mace");
         c.filter.add("minecraft:heavy_core");
         c.filter.add("minecraft:enchanted_book");
         return c;

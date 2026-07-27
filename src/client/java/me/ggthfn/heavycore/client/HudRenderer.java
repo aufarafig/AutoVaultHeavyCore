@@ -37,6 +37,22 @@ public class HudRenderer {
                     int x = (screenWidth - textWidth) / 2;
                     int y = (screenHeight / 2) + 20;
                     context.drawText(client.textRenderer, text, x, y, color, true);
+
+                    // Debug: cooldown
+                    int cd = VaultAutoOpener.getCooldown();
+
+                    String cdText = "cooldown: " + cd + " frames";
+                    int cdColor = 0xAAAAAA; // gray
+                    int cw = client.textRenderer.getWidth(cdText);
+                    context.drawText(client.textRenderer, cdText, (screenWidth - cw) / 2, y + 12, cdColor, true);
+
+                    // Warning: vault already triggered this session
+                    if (VaultAutoOpener.isAlreadyTriggered(bhr.getBlockPos())) {
+                        String warn = "ALREADY TRIGGERED - use new vault";
+                        int warnColor = 0xFF5555; // red
+                        int ww = client.textRenderer.getWidth(warn);
+                        context.drawText(client.textRenderer, warn, (screenWidth - ww) / 2, y + 24, warnColor, true);
+                    }
                 }
             }
         }
